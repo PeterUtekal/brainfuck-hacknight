@@ -1,0 +1,65 @@
+<html>
+				<head>
+								<title>Brainfuck interpreter</title>
+				</head>
+				<body>
+								<input type="text" id="source_code" />
+								<p id="output"></p>
+
+								<button onclick="parseSourceCode()">Run</button>
+
+								<script>
+
+												let source = document.getElementById('source_code');
+
+												function parseSourceCode(){
+														let sourceCode = source.value												
+																												
+														let memory = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+														let memoryIndex = 0
+														let skip = false
+
+														let sourceCodeArr = sourceCode.split("") 												
+
+														for(let i in sourceCodeArr){
+															if(sourceCodeArr[i] !== ']' && skip){
+																continue
+															}else if(skip){
+																skip = false
+															}
+
+															switch(sourceCodeArr[i]){
+																case '+':
+																	memory[memoryIndex]++;
+																	break
+																case '-':	
+																	memory[memoryIndex]--;
+																	break
+																case '>':	
+																	memoryIndex++
+																	break
+																case '<':	
+																	memoryIndex--
+																	break
+																case '[':	
+																	if(memory[memoryIndex] == 0){
+																		skip = true
+																	}else{
+																		continue
+																	}
+																	break
+																default:	
+																	continue
+																	break
+
+															}
+
+														}
+
+														document.getElementById('output').innerHTML = JSON.stringify(memory)
+												}
+
+								</script>
+				</body>
+
+</html>
